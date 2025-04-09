@@ -1,13 +1,17 @@
-import { Post } from "../hooks/post";
+import { cn, isEnvBrowser } from "@/utils/misc";
+
+import AnimationProvider from "./Animation";
+import { Post } from "@/hooks/post";
 import { children } from "solid-js";
-import clsx from "clsx";
-import { isEnvBrowser } from "../utils/mic";
-import { listen } from "../hooks/listen";
-import { observe } from "../hooks/observe";
-import { useVisibility } from "../stores/useVisibility";
+import { listen } from "@/hooks/listen";
+import { observe } from "@/hooks/observe";
+import { useVisibility } from "@/stores/useVisibility";
 
 export const VisibilityProvider = (props: any) => {
   const data = useVisibility();
+  observe<string>("setColor", (data) => {
+    document.documentElement.style.setProperty("--main-color", data);
+  });
   observe<boolean>("setVisible", data().set);
 
   listen("keyup", ({ code }) => {
@@ -21,11 +25,11 @@ export const VisibilityProvider = (props: any) => {
 
   return (
     <div
-      class={clsx("h-screen", {
+      class={cn("h-screen", {
         "bg-gray-600": isEnvBrowser(),
       })}
     >
-      {data().current && c()}
+      <AnimationProvider show={data().current}>{c()}</AnimationProvider>
     </div>
   );
 };

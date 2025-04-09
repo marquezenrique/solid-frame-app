@@ -1,4 +1,4 @@
-import { isEnvBrowser } from "../utils/mic";
+import { isEnvBrowser } from "@/utils/misc";
 
 export class Post<T = unknown> {
   private eventName: string;
