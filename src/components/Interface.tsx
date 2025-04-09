@@ -1,3 +1,3 @@
-export default function Interface() {
-  return <main>Visible!</main>;
-}
+export default () => {
+  return <main>Interface</main>;
+};
